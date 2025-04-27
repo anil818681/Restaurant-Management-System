@@ -1,0 +1,16 @@
+<h2>Order Tracking</h2>
+<form (ngSubmit)="createOrder()">
+  <input [(ngModel)]="newOrder.customerName" name="customerName" placeholder="Customer Name" required />
+  <input [(ngModel)]="newOrder.items" name="itemsOrdered" placeholder="Items Ordered (comma-separated)" required />
+  <button type="submit">Create Order</button>
+</form>
+
+<ul>
+  <li *ngFor="let order of orders">
+    <strong>Customer:</strong> {{ order.customerName }} - 
+    <strong>Items:</strong> {{ order.items.join(', ') }} - 
+    <strong>Status:</strong> {{ order.status }}
+    <button (click)="updateOrder(order)">Update Status</button>
+    <button (click)="deleteOrder(order.customerName)">Delete</button>
+  </li>
+</ul>

@@ -1,0 +1,60 @@
+<div class="container">
+  <h2>Payment Form</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="cardNumber">Card Number:</label>
+      <input type="text" id="cardNumber" formControlName="cardNumber" />
+      <div *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched" class="error">
+        Card Number is required and must be 16 digits.
+      </div>
+    </div>
+
+    <div>
+      <label for="cardHolder">Card Holder:</label>
+      <input type="text" id="cardHolder" formControlName="cardHolder" />
+      <div *ngIf="paymentForm.get('cardHolder')?.invalid && paymentForm.get('cardHolder')?.touched" class="error">
+        Card Holder is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="expiryDate">Expiry Date:</label>
+      <input type="text" id="expiryDate" formControlName="expiryDate" placeholder="MM/YY" />
+      <div *ngIf="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched" class="error">
+        Expiry Date is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" formControlName="cvv" />
+      <div *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched" class="error">
+        CVV is required and must be 3 or 4 digits.
+      </div>
+    </div>
+
+    <div>
+      <label for="amount">Amount:</label>
+      <input type="text" id="amount" formControlName="amount" />
+      <div *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched" class="error">
+        Amount is required.
+      </div>
+    </div>
+
+    <button type="submit" class="submit-payment" [disabled]="paymentForm.invalid">Submit Payment</button>
+  </form>
+
+  <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+
+  <hr>
+
+  <h3>Transaction History</h3>
+  <ul>
+    <li *ngFor="let payment of payments">
+      <strong>{{ payment.cardHolder }}</strong> - {{ payment.amount }} - {{ payment.status || 'Pending' }}
+      <button (click)="updatePaymentStatus(payment._id, 'Paid')">Mark as Paid</button>
+      <button (click)="updatePaymentStatus(payment._id, 'Refunded')">Mark as Refunded</button>
+      <button (click)="deletePayment(payment._id)">Void Payment</button>
+    </li>
+  </ul>
+</div>

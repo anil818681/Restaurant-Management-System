@@ -1,0 +1,16 @@
+<h2>Menu</h2>
+<form (ngSubmit)="submitMenuItem()">
+  <input [(ngModel)]="newItem.name" [ngModelOptions]="{standalone: true}" placeholder="Item Name" required />
+  <input [(ngModel)]="newItem.description" [ngModelOptions]="{standalone: true}" placeholder="Description" required />
+  <input [(ngModel)]="newItem.price" [ngModelOptions]="{standalone: true}" type="number" placeholder="Price" required />
+  <button type="submit">{{ isEditing ? 'Update Item' : 'Add Item' }}</button>
+  <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancel</button> 
+</form>
+
+<ul>
+  <li *ngFor="let item of menuItems">
+    {{ item.name }} - {{ item.description }} - ${{ item.price }}
+    <button (click)="editMenuItem(item)">Edit</button> 
+    <button (click)="deleteMenuItem(item._id)">Delete</button> <!-- Changed 'id' to '_id' here -->
+  </li>
+</ul>

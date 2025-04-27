@@ -1,0 +1,18 @@
+<h2>Announcement</h2>
+
+<!-- Form to create/update announcements -->
+<form (ngSubmit)="submitSingleAnnouncement()">
+  <input [(ngModel)]="newItem.date" name="date" placeholder="Date" required />
+  <input [(ngModel)]="newItem.description" name="description" placeholder="Type your Announcement here" required />
+  <button type="submit">{{ isEditing ? 'Update Announcement' : 'Create Announcement' }}</button>
+  <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancel</button>
+</form>
+
+<!-- List of announcements -->
+<ul>
+  <li *ngFor="let item of SingleAnnouncements">
+    {{ item.date }} - {{ item.description }}
+    <button (click)="editSingleAnnouncement(item)">Update Announcement</button>
+    <button (click)="deleteSingleAnnouncement(item.description, item.date)">Delete Announcement</button>
+  </li>
+</ul>
